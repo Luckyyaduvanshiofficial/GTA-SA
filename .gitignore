@@ -1,0 +1,74 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Build outputs
+css/styles.min.css
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Logs
+logs/
+*.log
+
+# Backup files
+*backup*
+*.bak
+
+# Test coverage
+coverage/
+
+# Production builds (if using separate build directory)
+# Uncomment if needed:
+# public/
+
+# Local server
+.serve/
+
+# MacOS
+.AppleDouble
+.LSOverride
+
+# Windows
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Netlify
+.netlify/
+
+# Local development
+.local/
+
+# Don't ignore essential files
+!css/styles.css
+!assets/**
+!scripts/**

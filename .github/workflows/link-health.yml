@@ -1,0 +1,115 @@
+name: Link Health Check
+
+on:
+  schedule:
+    # Run every day at 9 AM UTC
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Check download mirror links
+        id: check_links
+        run: |
+          echo "Checking download mirror availability..."
+          
+          # Extract mirror URLs from index.html
+          MIRRORS=$(grep -oP 'url: '\''https?://[^'\'']+' index.html | sed "s/url: '//g" | sed "s/'//g")
+          
+          ALL_OK=true
+          FAILED_LINKS=""
+          
+          for url in $MIRRORS; do
+            echo "Checking: $url"
+            
+            # Use curl to check if the link is accessible
+            HTTP_CODE=$(curl -o /dev/null -s -w "%{http_code}" -L "$url" --max-time 30)
+            
+            if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 302 ] || [ "$HTTP_CODE" -eq 301 ]; then
+              echo "  ✓ OK (HTTP $HTTP_CODE)"
+            else
+              echo "  ✗ FAILED (HTTP $HTTP_CODE)"
+              ALL_OK=false
+              FAILED_LINKS="${FAILED_LINKS}\n- ${url} (HTTP ${HTTP_CODE})"
+            fi
+          done
+          
+          if [ "$ALL_OK" = false ]; then
+            echo "failed_links<<EOF" >> $GITHUB_OUTPUT
+            echo -e "$FAILED_LINKS" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+      
+      - name: Create issue on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const failedLinks = `${{ steps.check_links.outputs.failed_links }}`;
+            
+            const issueTitle = `[Alert] Download Mirror Links Failed Health Check`;
+            const issueBody = `## ⚠️ Mirror Link Health Check Failed
+            
+            The automated health check detected broken or inaccessible download mirrors.
+            
+            **Failed Links:**
+            ${failedLinks}
+            
+            **Action Required:**
+            1. Verify the mirror links manually
+            2. Update or remove broken mirrors in \`index.html\`
+            3. Ensure all mirrors point to valid, accessible files
+            
+            **Date:** ${new Date().toISOString()}
+            **Workflow:** ${context.workflow}
+            **Run ID:** ${context.runId}
+            
+            ---
+            *This issue was automatically created by the Link Health Check workflow.*
+            `;
+            
+            // Check if an issue already exists
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: ['automated', 'mirror-health']
+            });
+            
+            const existingIssue = issues.data.find(issue => issue.title === issueTitle);
+            
+            if (existingIssue) {
+              // Update existing issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: `## Update: Health Check Failed Again\n\n${issueBody}`
+              });
+            } else {
+              // Create new issue
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issueTitle,
+                body: issueBody,
+                labels: ['automated', 'mirror-health', 'bug']
+              });
+            }
+      
+      - name: Success notification
+        if: success()
+        run: |
+          echo "✓ All download mirrors are healthy!"

@@ -1,0 +1,34 @@
+{
+  "name": "gta-san-andreas-landing",
+  "version": "2.0.0",
+  "description": "Fast, mobile-optimized landing page for GTA San Andreas mod pack (India)",
+  "main": "index.html",
+  "scripts": {
+    "build:css": "npx tailwindcss -i ./css/styles.css -o ./css/styles.min.css --minify",
+    "watch:css": "npx tailwindcss -i ./css/styles.css -o ./css/styles.min.css --watch",
+    "dev": "npx serve .",
+    "lint:html": "npx htmlhint index.html",
+    "optimize:images": "echo 'Use external tools like squoosh.app or tinypng.com to optimize images'",
+    "deploy": "npm run build:css && echo 'Build complete. Ready to deploy!'"
+  },
+  "keywords": [
+    "gta",
+    "san-andreas",
+    "mod",
+    "landing-page",
+    "gaming",
+    "india"
+  ],
+  "author": "GTA San Andreas Mods",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "serve": "^14.2.0",
+    "htmlhint": "^1.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/gta-landing-page.git"
+  },
+  "homepage": "https://gta-san-andreas.in"
+}

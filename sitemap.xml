@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    
+    <!-- Homepage -->
+    <url>
+        <loc>https://gta-san-andreas.in/</loc>
+        <lastmod>2025-11-13</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gta-san-andreas.one/" />
+        <xhtml:link rel="alternate" hreflang="en-IN" href="https://gta-san-andreas.in/" />
+    </url>
+    
+    <!-- Features Section -->
+    <url>
+        <loc>https://gta-san-andreas.in/#features</loc>
+        <lastmod>2025-11-13</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Gallery Section -->
+    <url>
+        <loc>https://gta-san-andreas.in/#gallery</loc>
+        <lastmod>2025-11-13</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Download Section -->
+    <url>
+        <loc>https://gta-san-andreas.in/#download</loc>
+        <lastmod>2025-11-13</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- FAQ Section -->
+    <url>
+        <loc>https://gta-san-andreas.in/#faq</loc>
+        <lastmod>2025-11-13</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    
+    <!-- Tutorials page (placeholder) -->
+    <url>
+        <loc>https://gta-san-andreas.in/tutorials</loc>
+        <lastmod>2025-11-13</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Privacy Policy (to be created) -->
+    <url>
+        <loc>https://gta-san-andreas.in/privacy.html</loc>
+        <lastmod>2025-11-13</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    
+    <!-- Terms of Service (to be created) -->
+    <url>
+        <loc>https://gta-san-andreas.in/terms.html</loc>
+        <lastmod>2025-11-13</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    
+</urlset>
